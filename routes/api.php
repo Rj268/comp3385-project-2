@@ -36,3 +36,6 @@ Route::get('/v1/search', [CarController::class, 'search']);
 Route::post('/v1/cars/{car_id}/favourite', [CarController::class, 'favourite'])->middleware('auth:sanctum');
 
 Route::post('/v1/users/{user_id}/favourites', [CarController::class, 'userFavourites']);
+
+
+Route::post('/v1/users/{user_id}', [AuthController::class, 'updateProfile'])->middleware('auth:sanctum');

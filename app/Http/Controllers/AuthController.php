@@ -60,4 +60,36 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Successfully logged out']);
     }
+
+    /**
+ * Update user profile information.
+ */
+public function updateProfile(Request $request, $user_id)
+{
+    $user = \App\Models\User::find($user_id);
+
+    if (!$user) {
+        return response()->json(['message' => 'User not found'], 404);
+    }
+
+    // Optional: Only allow the logged-in user to update their own profile
+    if ($request->user()->id !== $user->id) {
+        return response()->json(['message' => 'Unauthorized'], 403);
+    }
+
+    $validated = $request->validate([
+        'name' => 'sometimes|string|max:255',
+        'location' => 'sometimes|string|max:255',
+        'biography' => 'sometimes|string|max:255',
+        'photo' => 'sometimes|string|max:255',
+    ]);
+
+    $user->update($validated);
+
+    return response()->json([
+        'message' => 'Profile updated successfully',
+        'user' => $user
+    ]);
+}
+
 }
