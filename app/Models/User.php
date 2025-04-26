@@ -12,6 +12,11 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    public function favoutites()
+    {
+        return $this->belongsToMany(Car::class, 'favourites', 'user_id', 'car_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
