@@ -66,7 +66,7 @@ class AuthController extends Controller
  */
 public function updateProfile(Request $request, $user_id)
 {
-    $user = \App\Models\User::find($user_id);
+    $user = User::find($user_id);
 
     if (!$user) {
         return response()->json(['message' => 'User not found'], 404);
